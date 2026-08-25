@@ -9,6 +9,8 @@ file or from your database, and nobody sees them unless you say so.
 
 Built for **Filament v5** and **Laravel 12**.
 
+![The changelog page inside a Filament panel](art/panel-page.png)
+
 ---
 
 ## Highlights
@@ -19,6 +21,53 @@ Built for **Filament v5** and **Laravel 12**.
 - **Environment aware.** Ship a release to staging only, and production never learns it exists.
 - **Rich notes.** Alert boxes, tooltips, images, tables and code — all from plain markdown.
 - **No new dependencies.** `league/commonmark` already ships with Laravel.
+
+---
+
+## What it looks like
+
+The timeline is one component rendered two ways.
+
+**In your panel** — a read-only page for the whole team, at `/admin/changelog`:
+
+![Panel page](art/panel-page.png)
+
+**On your frontend** — a floating button that stays out of the way:
+
+![Floating button](art/fab.png)
+
+**Opened** — a sheet slides in from the right, over the page, no redirect:
+
+![Timeline sheet](art/timeline.png)
+
+Both surfaces render the same `<ship-log>` element and read the same feed, so
+they can never drift apart.
+
+---
+
+## Quick start
+
+```bash
+composer require ysfkaya/filament-shiplog
+php artisan filament:assets
+cp vendor/ysfkaya/filament-shiplog/stubs/CHANGELOG.example.md CHANGELOG.md
+```
+
+```php
+// AdminPanelProvider
+->plugins([
+    ShipLogPlugin::make(),
+])
+```
+
+```blade
+{{-- your layout, before </body> --}}
+<x-shiplog />
+```
+
+Log in, and the button appears. That is the whole setup — the sample changelog
+exercises every renderer feature, so you can see what the package does before
+writing a line of your own notes.
 
 ---
 
@@ -494,6 +543,45 @@ it('hides the changelog from visitors', function (): void {
 > Filament rebinds Livewire's `DataStore` mechanism. In a package test suite,
 > register `Filament\Support\SupportServiceProvider` **before**
 > `Livewire\LivewireServiceProvider`, or component error bags resolve to `null`.
+
+---
+
+## How teams use this
+
+**Developers own the changelog (default).** Keep `CHANGELOG.md` in the repo,
+edit it in the pull request that ships the feature, and it deploys with the
+code. The markdown driver is read-only by design: there is one source of truth
+and it is version controlled.
+
+**Non-developers publish releases.** Switch to the database driver. Releases get
+a form, a draft status and a release date, so marketing can write notes ahead of
+time and schedule them.
+
+Either way the timeline looks identical, because both drivers hand back the same
+`Release` objects.
+
+---
+
+## Troubleshooting
+
+**Nothing renders at all.** The gate is doing its job — `shiplog.view` defaults
+to authenticated users, so guests see no markup. Log in, or relax the gate.
+
+**The button is missing but the markup is there.** The JavaScript did not load.
+Run `php artisan filament:assets` after installing or upgrading, and confirm
+`/js/ysfkaya/fi-shiplog.js` returns 200.
+
+**Releases are missing from the timeline.** Check their environment targeting
+against `APP_ENV`. `ShipLog::releases('staging')` shows what a given environment
+would see. For the database driver, drafts and future dated releases are hidden
+on purpose.
+
+**Edits do not show up.** Caching is on. It clears itself when a database
+release is saved, but not when you edit a file — run `ShipLog::flush()` or use
+the **Clear cache** action on the panel page.
+
+**Styles look wrong.** The timeline lives in a shadow root, so your CSS cannot
+reach it. Use `::part(fab)` and `::part(panel)`, or publish the views.
 
 ---
 
