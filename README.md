@@ -350,7 +350,6 @@ return [
         'enabled' => true,
         'position' => FabPosition::BottomRight,
         'environments' => [],
-        'auto_inject' => false,
         'label' => null,
     ],
 

@@ -40,9 +40,4 @@ class MarkdownChangelogRepository implements ChangelogRepository
             ? (string) $this->files->lastModified($this->path)
             : '';
     }
-
-    public function path(): string
-    {
-        return $this->path;
-    }
 }

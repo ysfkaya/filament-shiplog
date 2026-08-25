@@ -4,7 +4,6 @@ namespace Ysfkaya\ShipLog;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Filament\Support\Concerns\EvaluatesClosures;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\ReleaseResource;
 
 class ShipLogPlugin implements Plugin
@@ -14,7 +13,6 @@ class ShipLogPlugin implements Plugin
     use Concerns\Authorization;
     use Concerns\HasFab;
     use Concerns\HasPage;
-    use EvaluatesClosures;
 
     protected ?bool $registersResource = null;
 
