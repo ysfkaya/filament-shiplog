@@ -1,0 +1,89 @@
+{
+    "name": "ysfkaya/filament-shiplog",
+    "description": "Ship Log — a beautiful, animated changelog & release notes timeline for Laravel Filament v5",
+    "keywords": [
+        "laravel",
+        "filament",
+        "filamentphp",
+        "changelog",
+        "release-notes",
+        "whats-new",
+        "timeline"
+    ],
+    "homepage": "https://github.com/ysfkaya/filament-shiplog",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yusuf Kaya",
+            "email": "yusuf.kaya.x0@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^5.0",
+        "league/commonmark": "^2.8",
+        "spatie/laravel-package-tools": "^1.92"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^8.1",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-arch": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest-plugin-livewire": "^4.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "rector/rector": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ysfkaya\\ShipLog\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ysfkaya\\ShipLog\\Tests\\": "tests/",
+            "Ysfkaya\\ShipLog\\Tests\\Database\\Factories\\": "tests/database/factories/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ysfkaya\\ShipLog\\ShipLogServiceProvider"
+            ],
+            "aliases": {
+                "ShipLog": "Ysfkaya\\ShipLog\\Facades\\ShipLog"
+            }
+        }
+    },
+    "scripts": {
+        "lint": "pint",
+        "refactor": "rector",
+        "test:lint": "pint --test",
+        "test:unit": "pest",
+        "test:types": "phpstan",
+        "test:refactor": "rector --dry-run",
+        "test": [
+            "@test:unit",
+            "@test:lint",
+            "@test:types",
+            "@test:refactor"
+        ],
+        "complete": [
+            "@refactor",
+            "@lint"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,14 @@
+.idea
+.phpunit.result.cache
+.phpunit.cache
+yarn-error.log
+build
+composer.lock
+coverage
+docs
+art
+phpunit.xml
+phpstan.neon
+testbench.yaml
+vendor
+node_modules
