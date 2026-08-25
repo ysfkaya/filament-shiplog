@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ysfkaya\ShipLog\Database\Factories\ReleaseFactory;
 use Ysfkaya\ShipLog\Enums\ReleaseStatus;
+use Ysfkaya\ShipLog\Support\Settings;
 
 /**
  * @property string $version
@@ -27,7 +28,7 @@ class Release extends Model
 
     public function getTable(): string
     {
-        return $this->table ?? config('shiplog.table', 'shiplog_releases');
+        return $this->table ?? app(Settings::class)->table;
     }
 
     /**

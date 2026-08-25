@@ -14,6 +14,7 @@ use Ysfkaya\ShipLog\Facades\ShipLog;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\ReleaseResource;
 use Ysfkaya\ShipLog\ShipLogPlugin;
 use Ysfkaya\ShipLog\Support\Authorizer;
+use Ysfkaya\ShipLog\Support\Settings;
 
 class Changelog extends Page
 {
@@ -70,7 +71,7 @@ class Changelog extends Page
                 ->label(__('shiplog::shiplog.actions.flush'))
                 ->icon(Heroicon::ArrowPath)
                 ->color('gray')
-                ->visible(fn (): bool => (bool) config('shiplog.cache.enabled') && ShipLogPlugin::get()->canManage())
+                ->visible(fn (): bool => app(Settings::class)->cacheEnabled && ShipLogPlugin::get()->canManage())
                 ->action(function (): void {
                     ShipLog::flush();
 

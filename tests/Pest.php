@@ -3,6 +3,7 @@
 use Ysfkaya\ShipLog\Markdown\ChangelogParser;
 use Ysfkaya\ShipLog\Markdown\MarkdownRenderer;
 use Ysfkaya\ShipLog\ShipLogManager;
+use Ysfkaya\ShipLog\Support\Settings;
 use Ysfkaya\ShipLog\Tests\Fixtures\User;
 use Ysfkaya\ShipLog\Tests\TestCase;
 
@@ -24,7 +25,7 @@ function changelogFixture(string $contents): string
 
     file_put_contents($path, $contents);
 
-    config()->set('shiplog.markdown.path', $path);
+    app(Settings::class)->markdownPath = $path;
 
     return $path;
 }
@@ -36,6 +37,11 @@ function changelogFixture(string $contents): string
 function shiplog(): ShipLogManager
 {
     return new ShipLogManager(app());
+}
+
+function settings(): Settings
+{
+    return app(Settings::class);
 }
 
 function actingAsUser(): User

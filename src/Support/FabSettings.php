@@ -56,7 +56,7 @@ class FabSettings
 
     public function isEnabled(): bool
     {
-        return $this->enabled ?? (bool) config('shiplog.fab.enabled', true);
+        return $this->enabled ?? true;
     }
 
     public function isEnabledIn(string $environment): bool
@@ -76,14 +76,12 @@ class FabSettings
             return $this->position;
         }
 
-        $configured = config('shiplog.fab.position', FabPosition::BottomRight);
-
-        return $configured instanceof FabPosition ? $configured : FabPosition::from((string) $configured);
+        return FabPosition::BottomRight;
     }
 
     public function getLabel(): ?string
     {
-        return $this->label ?? config('shiplog.fab.label');
+        return $this->label;
     }
 
     /**
@@ -91,6 +89,6 @@ class FabSettings
      */
     public function getEnvironments(): array
     {
-        return $this->environments ?? config('shiplog.fab.environments', []);
+        return $this->environments ?? [];
     }
 }

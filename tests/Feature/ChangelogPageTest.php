@@ -41,13 +41,13 @@ it('offers a cache action only while caching is on', function (): void {
 
     livewire(Changelog::class)->assertActionHidden('flush');
 
-    config()->set('shiplog.cache.enabled', true);
+    settings()->cacheEnabled = true;
 
     livewire(Changelog::class)->assertActionVisible('flush');
 });
 
 it('clears the cache from the page', function (): void {
-    config()->set('shiplog.cache.enabled', true);
+    settings()->cacheEnabled = true;
 
     changelogFixture('## [1.0.0] - 2025-01-01');
 

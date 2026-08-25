@@ -61,7 +61,7 @@ it('pages the feed and reports the next cursor', function (): void {
         ->map(fn (int $i): string => "## [1.0.{$i}] - 2025-01-01\n\n### Fixed\n- Something\n")
         ->implode("\n"));
 
-    config()->set('shiplog.per_page', 5);
+    settings()->perPage = 5;
 
     actingAsUser();
 

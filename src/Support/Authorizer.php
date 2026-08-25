@@ -25,6 +25,7 @@ class Authorizer
 
     public function __construct(
         protected readonly Gate $gate,
+        protected readonly Settings $settings,
     ) {}
 
     public function view(Closure | bool $condition = true): static
@@ -43,12 +44,12 @@ class Authorizer
 
     public function canView(?Authenticatable $user = null): bool
     {
-        return $this->decide($this->view, config('shiplog.gates.view', 'shiplog.view'), $user);
+        return $this->decide($this->view, $this->settings->viewGate, $user);
     }
 
     public function canManage(?Authenticatable $user = null): bool
     {
-        return $this->decide($this->manage, config('shiplog.gates.manage', 'shiplog.manage'), $user);
+        return $this->decide($this->manage, $this->settings->manageGate, $user);
     }
 
     /**
@@ -57,7 +58,7 @@ class Authorizer
      */
     public function registerGates(): void
     {
-        foreach ([config('shiplog.gates.view'), config('shiplog.gates.manage')] as $ability) {
+        foreach ([$this->settings->viewGate, $this->settings->manageGate] as $ability) {
             if (blank($ability) || $this->gate->has($ability)) {
                 continue;
             }

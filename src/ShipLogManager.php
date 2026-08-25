@@ -12,6 +12,7 @@ use Ysfkaya\ShipLog\Markdown\ChangelogParser;
 use Ysfkaya\ShipLog\Markdown\MarkdownRenderer;
 use Ysfkaya\ShipLog\Repositories\DatabaseChangelogRepository;
 use Ysfkaya\ShipLog\Repositories\MarkdownChangelogRepository;
+use Ysfkaya\ShipLog\Support\Settings;
 
 /**
  * Resolves the configured changelog driver and applies the rules that must
@@ -24,7 +25,7 @@ class ShipLogManager extends Manager
 {
     public function getDefaultDriver(): string
     {
-        return $this->config->get('shiplog.driver', 'markdown');
+        return $this->settings()->driver;
     }
 
     protected function createMarkdownDriver(): ChangelogRepository
@@ -32,7 +33,7 @@ class ShipLogManager extends Manager
         return new MarkdownChangelogRepository(
             $this->container->make(ChangelogParser::class),
             $this->container->make(Filesystem::class),
-            $this->config->get('shiplog.markdown.path') ?: base_path('CHANGELOG.md'),
+            $this->settings()->changelogPath(),
         );
     }
 
@@ -41,7 +42,7 @@ class ShipLogManager extends Manager
         return new DatabaseChangelogRepository(
             $this->container->make(ChangelogParser::class),
             $this->container->make(MarkdownRenderer::class),
-            $this->config->get('shiplog.model', Models\Release::class),
+            $this->settings()->model,
         );
     }
 
@@ -77,8 +78,7 @@ class ShipLogManager extends Manager
 
     public function flush(): void
     {
-        Cache::store($this->config->get('shiplog.cache.store'))
-            ->forget($this->config->get('shiplog.cache.key', 'shiplog.releases'));
+        Cache::store($this->settings()->cacheStore)->forget($this->settings()->cacheKey);
     }
 
     /**
@@ -86,14 +86,21 @@ class ShipLogManager extends Manager
      */
     protected function cached(): Collection
     {
-        if (! $this->config->get('shiplog.cache.enabled', false)) {
+        $settings = $this->settings();
+
+        if (! $settings->cacheEnabled) {
             return $this->driver()->all();
         }
 
-        return Cache::store($this->config->get('shiplog.cache.store'))->remember(
-            $this->config->get('shiplog.cache.key', 'shiplog.releases'),
-            $this->config->get('shiplog.cache.ttl', 3600),
+        return Cache::store($settings->cacheStore)->remember(
+            $settings->cacheKey,
+            $settings->cacheTtl,
             fn (): Collection => $this->driver()->all(),
         );
+    }
+
+    public function settings(): Settings
+    {
+        return $this->container->make(Settings::class);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Ysfkaya\ShipLog\Data\Release;
 use Ysfkaya\ShipLog\ShipLogManager;
 use Ysfkaya\ShipLog\Support\Authorizer;
+use Ysfkaya\ShipLog\Support\Settings;
 
 class FeedController
 {
@@ -16,7 +17,7 @@ class FeedController
 
         $releases = $manager->releases();
 
-        $perPage = max(1, min(100, (int) $request->integer('per_page', (int) config('shiplog.per_page', 15))));
+        $perPage = max(1, min(100, (int) $request->integer('per_page', app(Settings::class)->perPage)));
         $cursor = max(0, $request->integer('cursor'));
 
         $page = $releases->slice($cursor, $perPage);

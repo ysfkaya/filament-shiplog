@@ -15,9 +15,9 @@ use Ysfkaya\ShipLog\Filament\Resources\Releases\Pages\EditRelease;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Pages\ListReleases;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Schemas\ReleaseForm;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Tables\ReleasesTable;
-use Ysfkaya\ShipLog\Models\Release;
 use Ysfkaya\ShipLog\ShipLogPlugin;
 use Ysfkaya\ShipLog\Support\Authorizer;
+use Ysfkaya\ShipLog\Support\Settings;
 
 class ReleaseResource extends Resource
 {
@@ -25,7 +25,7 @@ class ReleaseResource extends Resource
 
     public static function getModel(): string
     {
-        return config('shiplog.model', Release::class);
+        return app(Settings::class)->model;
     }
 
     public static function getSlug(?Panel $panel = null): string

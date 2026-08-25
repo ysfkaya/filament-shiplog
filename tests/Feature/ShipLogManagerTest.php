@@ -14,7 +14,7 @@ it('defaults to the markdown driver', function (): void {
 });
 
 it('resolves the database driver from config', function (): void {
-    config()->set('shiplog.driver', 'database');
+    settings()->driver = 'database';
 
     expect(shiplog()->driver())->toBeInstanceOf(DatabaseChangelogRepository::class);
 });
@@ -30,7 +30,7 @@ it('reads releases out of a changelog file', function (): void {
 });
 
 it('returns nothing when the changelog file is missing', function (): void {
-    config()->set('shiplog.markdown.path', '/does/not/exist.md');
+    settings()->markdownPath = '/does/not/exist.md';
 
     expect(shiplog()->releases())->toBeEmpty();
 });
@@ -73,7 +73,7 @@ it('exposes the newest release', function (): void {
 });
 
 it('only reads published releases from the database', function (): void {
-    config()->set('shiplog.driver', 'database');
+    settings()->driver = 'database';
 
     ReleaseModel::factory()->create(['version' => '2.0.0', 'status' => ReleaseStatus::Published]);
     ReleaseModel::factory()->draft()->create(['version' => '1.9.0']);
@@ -82,7 +82,7 @@ it('only reads published releases from the database', function (): void {
 });
 
 it('hides database releases scheduled for the future', function (): void {
-    config()->set('shiplog.driver', 'database');
+    settings()->driver = 'database';
 
     ReleaseModel::factory()->create(['version' => '3.0.0', 'released_at' => now()->addWeek()]);
     ReleaseModel::factory()->create(['version' => '2.0.0', 'released_at' => now()->subWeek()]);
@@ -91,7 +91,7 @@ it('hides database releases scheduled for the future', function (): void {
 });
 
 it('renders database bodies with the same markdown pipeline', function (): void {
-    config()->set('shiplog.driver', 'database');
+    settings()->driver = 'database';
 
     ReleaseModel::factory()->create([
         'version' => '1.0.0',
@@ -107,7 +107,7 @@ it('renders database bodies with the same markdown pipeline', function (): void 
 it('caches releases when caching is enabled', function (): void {
     $path = changelogFixture('## [1.0.0] - 2025-01-01');
 
-    config()->set('shiplog.cache.enabled', true);
+    settings()->cacheEnabled = true;
 
     expect(shiplog()->releases())->toHaveCount(1);
 
@@ -129,8 +129,8 @@ it('does not touch the cache when caching is disabled', function (): void {
 });
 
 it('flushes the cache when a release is saved', function (): void {
-    config()->set('shiplog.driver', 'database');
-    config()->set('shiplog.cache.enabled', true);
+    settings()->driver = 'database';
+    settings()->cacheEnabled = true;
 
     ReleaseModel::factory()->create(['version' => '1.0.0']);
 
@@ -148,7 +148,7 @@ it('signs the markdown changelog with its modification time', function (): void 
 });
 
 it('returns an empty signature when there is no changelog file', function (): void {
-    config()->set('shiplog.markdown.path', '/does/not/exist.md');
+    settings()->markdownPath = '/does/not/exist.md';
 
     expect(shiplog()->signature())->toBe('');
 });
@@ -174,7 +174,7 @@ it('accepts a custom driver', function (): void {
         }
     });
 
-    config()->set('shiplog.driver', 'github');
+    settings()->driver = 'github';
 
     expect($manager->releases()->first()->version)->toBe('9.9.9')
         ->and($manager->signature())->toBe('static');

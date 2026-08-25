@@ -412,35 +412,51 @@ Recognised types: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`,
 
 ## Configuration
 
-The plugin covers almost everything, so publishing the config file is optional.
-What remains is what a panel cannot own:
+There is no config file. The plugin is the only place Ship Log is configured,
+so there is nothing to publish and nothing that can drift out of sync.
 
 ```php
-return [
-    // Registered before any panel boots.
-    'route' => [
-        'enabled' => true,
-        'prefix' => 'shiplog',
-        'middleware' => ['web'],   // add 'auth' to lock the feed down further
-    ],
+use Filament\Support\Icons\Heroicon;
+use Ysfkaya\ShipLog\Enums\FabPosition;
+use Ysfkaya\ShipLog\ShipLogPlugin;
 
-    // Ability names. Use ->authorizeView() to change who passes.
-    'gates' => [
-        'view' => 'shiplog.view',
-        'manage' => 'shiplog.manage',
-    ],
+ShipLogPlugin::make()
+    // Where releases come from
+    ->usingMarkdown(base_path('CHANGELOG.md'))
+    // ->usingDatabase(Release::class, table: 'shiplog_releases')
+    ->allowRawHtml(false)
 
-    // Read by the migration.
-    'table' => 'shiplog_releases',
+    // Performance
+    ->cache(true, ttl: 3600, store: 'redis')
+    ->perPage(20)
 
-    // Defaults for apps that use the frontend timeline without a panel.
-    'driver' => env('SHIPLOG_DRIVER', 'markdown'),
-    'markdown' => ['path' => env('SHIPLOG_PATH')],
-];
+    // Feed route
+    ->feedRoute(prefix: 'changelog', middleware: ['web', 'auth'])
+
+    // Panel page
+    ->slug('whats-new')
+    ->pageTitle('Product updates')
+    ->navigationLabel('Updates')
+    ->navigationIcon(Heroicon::OutlinedSparkles)
+    ->navigationGroup('Settings')
+    ->navigationSort(90)
+    ->resource()
+
+    // Floating button
+    ->fab(FabPosition::BottomLeft)
+    ->fabLabel('What changed?')
+    ->fabEnvironments(['production'])
+
+    // Authorization
+    ->gates(view: 'changelog.view', manage: 'changelog.manage')
+    ->authorizeView(fn (?User $user): bool => $user !== null)
+    ->authorizeManage(fn (User $user): bool => $user->isAdmin());
 ```
 
-Everything else — cache, page size, raw HTML, the model, the button, the page —
-is set on the plugin. See the table below.
+> [!IMPORTANT]
+> Because the plugin owns everything, the frontend timeline needs the plugin
+> registered on a panel. Routes, gates and the driver are all configured there,
+> and are set up once panels have booted.
 
 ---
 

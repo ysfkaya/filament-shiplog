@@ -3,20 +3,15 @@
 use Ysfkaya\ShipLog\Enums\FabPosition;
 use Ysfkaya\ShipLog\Support\FabSettings;
 
-it('falls back to config', function (): void {
-    config()->set('shiplog.fab.position', 'top-left');
-    config()->set('shiplog.fab.label', 'Updates');
-
+it('defaults to the bottom right corner', function (): void {
     $settings = new FabSettings;
 
-    expect($settings->getPosition())->toBe(FabPosition::TopLeft)
-        ->and($settings->getLabel())->toBe('Updates')
+    expect($settings->getPosition())->toBe(FabPosition::BottomRight)
+        ->and($settings->getLabel())->toBeNull()
         ->and($settings->isEnabled())->toBeTrue();
 });
 
-it('prefers an explicit position over config', function (): void {
-    config()->set('shiplog.fab.position', 'top-left');
-
+it('takes an explicit position', function (): void {
     expect((new FabSettings)->position(FabPosition::BottomLeft)->getPosition())
         ->toBe(FabPosition::BottomLeft);
 });

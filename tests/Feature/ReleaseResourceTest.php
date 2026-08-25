@@ -12,7 +12,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
 beforeEach(function (): void {
-    config()->set('shiplog.driver', 'database');
+    settings()->driver = 'database';
 });
 
 it('is closed to guests', function (): void {

@@ -28,6 +28,6 @@ return new class extends Migration
 
     private function table(): string
     {
-        return config('shiplog.table', 'shiplog_releases');
+        return app(\Ysfkaya\ShipLog\Support\Settings::class)->table;
     }
 };

@@ -2,6 +2,7 @@
 
 namespace Ysfkaya\ShipLog;
 
+use Filament\Facades\Filament;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Ysfkaya\ShipLog\Markdown\ChangelogParser;
 use Ysfkaya\ShipLog\Markdown\MarkdownRenderer;
 use Ysfkaya\ShipLog\Support\Authorizer;
 use Ysfkaya\ShipLog\Support\FabSettings;
+use Ysfkaya\ShipLog\Support\Settings;
 
 class ShipLogServiceProvider extends PackageServiceProvider
 {
@@ -22,7 +24,6 @@ class ShipLogServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('shiplog')
-            ->hasConfigFile()
             ->hasViews('shiplog')
             ->hasTranslations()
             ->hasMigration('create_shiplog_releases_table');
@@ -31,12 +32,13 @@ class ShipLogServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->app->singleton(MarkdownRenderer::class, fn ($app): MarkdownRenderer => new MarkdownRenderer(
-            (bool) $app['config']->get('shiplog.markdown.allow_html', false),
+            $app->make(Settings::class)->allowRawHtml,
         ));
 
         $this->app->singleton(ChangelogParser::class);
         $this->app->singleton(ShipLogPlugin::class);
         $this->app->singleton(ShipLogManager::class);
+        $this->app->singleton(Settings::class);
         $this->app->singleton(Authorizer::class);
         $this->app->singleton(FabSettings::class);
 
@@ -48,24 +50,32 @@ class ShipLogServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        $this->app->make(Authorizer::class)->registerGates();
-
-        $this->registerRoutes();
         $this->registerAssets();
-        $this->registerCacheInvalidation();
+
+        // Panels have to boot first: the plugin is where routes, gates and the
+        // driver are configured, and none of that exists until it registers.
+        $this->app->booted(function (): void {
+            Filament::getPanels();
+
+            $this->app->make(Authorizer::class)->registerGates();
+            $this->registerRoutes();
+            $this->registerCacheInvalidation();
+        });
 
         Blade::component(View\ShipLog::class, 'shiplog');
     }
 
     protected function registerRoutes(): void
     {
-        if (! config('shiplog.route.enabled', true)) {
+        $settings = $this->app->make(Settings::class);
+
+        if (! $settings->routesEnabled) {
             return;
         }
 
         Route::group([
-            'prefix' => config('shiplog.route.prefix', 'shiplog'),
-            'middleware' => config('shiplog.route.middleware', ['web']),
+            'prefix' => $settings->routePrefix,
+            'middleware' => $settings->routeMiddleware,
         ], function (): void {
             Route::get('feed', FeedController::class)->name('shiplog.feed');
         });
@@ -84,9 +94,9 @@ class ShipLogServiceProvider extends PackageServiceProvider
      */
     protected function registerCacheInvalidation(): void
     {
-        $model = config('shiplog.model', Models\Release::class);
+        $model = $this->app->make(Settings::class)->model;
 
-        if (! is_string($model) || ! is_subclass_of($model, Model::class)) {
+        if (! is_subclass_of($model, Model::class)) {
             return;
         }
 

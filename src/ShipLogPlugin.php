@@ -46,7 +46,7 @@ class ShipLogPlugin implements Plugin
 
     public function hasResource(): bool
     {
-        return $this->registersResource ?? config('shiplog.driver') === 'database';
+        return $this->registersResource ?? $this->settings()->driver === 'database';
     }
 
     public function register(Panel $panel): void
