@@ -40,6 +40,10 @@ The timeline is one component rendered two ways.
 
 ![Timeline sheet](art/timeline.png)
 
+It follows the host page's theme automatically:
+
+![Timeline in dark mode](art/timeline-dark.png)
+
 Both surfaces render the same `<ship-log>` element and read the same feed, so
 they can never drift apart.
 
