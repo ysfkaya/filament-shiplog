@@ -152,9 +152,9 @@ class ShipLogElement extends HTMLElement {
                             ${subtitle ? `<span>${escape(subtitle)}</span>` : ''}
                         </div>
                         <button class="sl-close" type="button" aria-label="Close">${svg(ICON.close, '')}</button>
+                        <div class="sl-progress"><i></i></div>
                     </header>
                     <div class="sl-scroll">
-                        <div class="sl-progress"><i></i></div>
                         <div class="sl-content"></div>
                     </div>
                 </div>
