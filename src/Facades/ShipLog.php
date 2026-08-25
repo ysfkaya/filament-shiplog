@@ -11,6 +11,7 @@ use Ysfkaya\ShipLog\ShipLogManager;
  * @method static ?\Ysfkaya\ShipLog\Data\Release find(string $version, ?string $environment = null)
  * @method static \Ysfkaya\ShipLog\Contracts\ChangelogRepository driver(?string $driver = null)
  * @method static \Ysfkaya\ShipLog\ShipLogManager extend(string $driver, \Closure $callback)
+ * @method static string signature()
  * @method static void flush()
  *
  * @see ShipLogManager

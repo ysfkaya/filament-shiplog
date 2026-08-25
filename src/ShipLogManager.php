@@ -70,6 +70,11 @@ class ShipLogManager extends Manager
             ->first(fn (Release $release): bool => $release->version === $version);
     }
 
+    public function signature(): string
+    {
+        return $this->driver()->signature();
+    }
+
     public function flush(): void
     {
         Cache::store($this->config->get('shiplog.cache.store'))

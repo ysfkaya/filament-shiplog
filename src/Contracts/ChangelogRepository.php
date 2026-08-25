@@ -15,4 +15,10 @@ interface ChangelogRepository
     public function all(): Collection;
 
     public function find(string $version): ?Release;
+
+    /**
+     * An opaque token that changes whenever the changelog changes. Used to
+     * show an unread dot on the floating button without parsing anything.
+     */
+    public function signature(): string;
 }

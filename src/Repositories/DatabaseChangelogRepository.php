@@ -39,6 +39,11 @@ class DatabaseChangelogRepository implements ChangelogRepository
         return $release instanceof Release ? $this->toData($release) : null;
     }
 
+    public function signature(): string
+    {
+        return (string) $this->query()->published()->max('updated_at');
+    }
+
     /**
      * @return Builder<Release>
      */

@@ -34,6 +34,13 @@ class MarkdownChangelogRepository implements ChangelogRepository
         return $this->all()->first(fn (Release $release): bool => $release->version === $version);
     }
 
+    public function signature(): string
+    {
+        return $this->files->isFile($this->path)
+            ? (string) $this->files->lastModified($this->path)
+            : '';
+    }
+
     public function path(): string
     {
         return $this->path;
