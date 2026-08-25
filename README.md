@@ -1,5 +1,14 @@
 # Ship Log
 
+<p align="center">
+    <a href="https://packagist.org/packages/ysfkaya/filament-shiplog"><img alt="Latest version" src="https://img.shields.io/packagist/v/ysfkaya/filament-shiplog.svg?style=for-the-badge&logo=packagist&logoColor=white&label=version&color=4f46e5"></a>
+    <a href="https://github.com/ysfkaya/filament-shiplog/actions/workflows/tests.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/ysfkaya/filament-shiplog/tests.yml?branch=main&style=for-the-badge&logo=github&logoColor=white&label=tests"></a>
+    <a href="https://packagist.org/packages/ysfkaya/filament-shiplog"><img alt="Downloads" src="https://img.shields.io/packagist/dt/ysfkaya/filament-shiplog.svg?style=for-the-badge&label=downloads&color=a855f7"></a>
+    <a href="https://filamentphp.com"><img alt="Filament v5" src="https://img.shields.io/badge/filament-v5-fdae4b?style=for-the-badge&logo=laravel&logoColor=white"></a>
+    <a href="https://php.net"><img alt="PHP 8.2+" src="https://img.shields.io/packagist/dependency-v/ysfkaya/filament-shiplog/php?style=for-the-badge&logo=php&logoColor=white&color=777bb4"></a>
+    <a href="LICENSE.md"><img alt="License" src="https://img.shields.io/packagist/l/ysfkaya/filament-shiplog.svg?style=for-the-badge&color=10b981"></a>
+</p>
+
 A changelog your users will actually read.
 
 Ship Log turns release notes into a premium, animated timeline — a floating
