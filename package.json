@@ -1,5 +1,4 @@
 {
-    "private": true,
     "type": "module",
     "scripts": {
         "dev": "node bin/build.js --dev",
@@ -7,5 +6,15 @@
     },
     "devDependencies": {
         "esbuild": "^0.25.5"
-    }
+    },
+    "name": "@ysfkaya/shiplog",
+    "version": "1.0.0",
+    "main": "resources/dist/fi-shiplog.js",
+    "module": "resources/dist/fi-shiplog.js",
+    "exports": {
+        ".": "./resources/dist/fi-shiplog.js"
+    },
+    "files": [
+        "resources/dist"
+    ]
 }

@@ -62,6 +62,13 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app): void
     {
+        $app['config']->set('view.paths', array_merge(
+            $app['config']->get('view.paths', []),
+            [__DIR__ . '/Fixtures/views'],
+        ));
+
+        $app['config']->set('inertia.root_view', 'inertia');
+
         $app['config']->set('app.key', 'base64:fs7e0Hwi58EfBeSzcP7OuM1gJkUOOMTXdK+5e51umeA=');
         $app['config']->set('auth.providers.users.model', User::class);
 

@@ -95,6 +95,28 @@ cross the shadow boundary:
 document.addEventListener('shiplog:open', () => analytics.track('changelog_opened'))
 ```
 
+### Inertia
+
+Render the component once in your root Blade layout (`app.blade.php`), outside
+the Inertia root element. The timeline survives every client side visit, because
+Inertia never replaces that part of the document.
+
+```blade
+<body>
+    @inertia
+    <x-shiplog />
+</body>
+```
+
+The middleware is Inertia aware: it injects into the initial page load and skips
+`X-Inertia` visit responses, so partial reloads never receive a second copy.
+
+To import the element from your own bundle instead:
+
+```js
+import '@ysfkaya/shiplog'
+```
+
 ### React, Vue and Svelte
 
 `<ship-log>` is a standard custom element, so it works as-is:

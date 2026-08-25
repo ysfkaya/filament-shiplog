@@ -41,9 +41,24 @@ class InjectShipLog
 
     protected function shouldInject(Request $request, Response $response): bool
     {
+        if ($request->header('X-Inertia')) {
+            return false;
+        }
+
         return ! $request->ajax()
             && ! $request->wantsJson()
             && $response->isSuccessful()
-            && str_contains((string) $response->headers->get('Content-Type'), 'text/html');
+            && $this->isHtml($response);
+    }
+
+    /**
+     * Responses built from a view often have no Content-Type yet, so only an
+     * explicitly non-HTML type rules a response out.
+     */
+    protected function isHtml(Response $response): bool
+    {
+        $type = $response->headers->get('Content-Type');
+
+        return blank($type) || str_contains($type, 'text/html');
     }
 }
