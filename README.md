@@ -412,47 +412,35 @@ Recognised types: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`,
 
 ## Configuration
 
+The plugin covers almost everything, so publishing the config file is optional.
+What remains is what a panel cannot own:
+
 ```php
 return [
-    'driver' => env('SHIPLOG_DRIVER', 'markdown'),
-
-    'markdown' => [
-        'path' => env('SHIPLOG_PATH'),          // defaults to base_path('CHANGELOG.md')
-        'allow_html' => false,                  // raw HTML is escaped by default
-    ],
-
-    'model' => Ysfkaya\ShipLog\Models\Release::class,
-    'table' => 'shiplog_releases',
-
-    'cache' => [
-        'enabled' => env('SHIPLOG_CACHE', false),
-        'store' => env('SHIPLOG_CACHE_STORE'),
-        'key' => 'shiplog.releases',
-        'ttl' => 3600,
-    ],
-
+    // Registered before any panel boots.
     'route' => [
         'enabled' => true,
         'prefix' => 'shiplog',
-        'middleware' => ['web'],                // add 'auth' to lock the feed down further
+        'middleware' => ['web'],   // add 'auth' to lock the feed down further
     ],
 
-    'fab' => [
-        'enabled' => true,
-        'position' => FabPosition::BottomRight,
-        'environments' => [],
-        'label' => null,
-    ],
-
+    // Ability names. Use ->authorizeView() to change who passes.
     'gates' => [
         'view' => 'shiplog.view',
         'manage' => 'shiplog.manage',
     ],
+
+    // Read by the migration.
+    'table' => 'shiplog_releases',
+
+    // Defaults for apps that use the frontend timeline without a panel.
+    'driver' => env('SHIPLOG_DRIVER', 'markdown'),
+    'markdown' => ['path' => env('SHIPLOG_PATH')],
 ];
 ```
 
-Turn caching on in production. Markdown is parsed once, and the cache clears
-itself whenever a database release is saved.
+Everything else — cache, page size, raw HTML, the model, the button, the page —
+is set on the plugin. See the table below.
 
 ---
 
