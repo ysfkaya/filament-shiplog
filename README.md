@@ -29,6 +29,13 @@ composer require ysfkaya/filament-shiplog
 php artisan filament:assets
 ```
 
+Ship Log reads `base_path('CHANGELOG.md')` by default. To preview every
+renderer feature, copy the sample:
+
+```bash
+cp vendor/ysfkaya/filament-shiplog/stubs/CHANGELOG.example.md CHANGELOG.md
+```
+
 Publish what you need:
 
 ```bash
