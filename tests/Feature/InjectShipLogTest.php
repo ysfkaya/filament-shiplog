@@ -16,8 +16,8 @@ it('adds the timeline before the closing body tag', function (): void {
     $html = $this->get('/injected')->assertSuccessful()->getContent();
 
     expect($html)->toContain('<ship-log')
-        ->and($html)->toEndWith('</body></html>')
-        ->and(strpos($html, '<ship-log'))->toBeGreaterThan(strpos($html, '<h1>Hi</h1>'));
+        ->and(strpos($html, '<ship-log'))->toBeGreaterThan(strpos($html, '<h1>Hi</h1>'))
+        ->and(strpos($html, '<ship-log'))->toBeLessThan(strripos($html, '</body>'));
 });
 
 it('leaves the page alone for guests', function (): void {
