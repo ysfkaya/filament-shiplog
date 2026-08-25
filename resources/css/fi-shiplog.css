@@ -189,6 +189,18 @@
     transform: translateX(0);
 }
 
+:host([mode="inline"]) .sl-overlay {
+    position: static;
+    display: block;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+:host([mode="inline"]) .sl-backdrop,
+:host([mode="inline"]) .sl-grip {
+    display: none;
+}
+
 :host([mode="inline"]) .sl-panel {
     width: 100%;
     height: auto;
