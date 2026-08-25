@@ -55,3 +55,35 @@ it('sends rendered html rather than raw markdown', function (): void {
     expect($this->getJson('/shiplog/feed')->json('releases.0.body'))
         ->toContain('sl-alert--warning');
 });
+
+it('pages the feed and reports the next cursor', function (): void {
+    changelogFixture(collect(range(20, 1))
+        ->map(fn (int $i): string => "## [1.0.{$i}] - 2025-01-01\n\n### Fixed\n- Something\n")
+        ->implode("\n"));
+
+    config()->set('shiplog.per_page', 5);
+
+    actingAsUser();
+
+    $first = $this->getJson('/shiplog/feed')
+        ->assertSuccessful()
+        ->assertJsonCount(5, 'releases')
+        ->assertJsonPath('next', 5)
+        ->assertJsonPath('total', 20);
+
+    $this->getJson('/shiplog/feed?cursor=15')
+        ->assertJsonCount(5, 'releases')
+        ->assertJsonPath('next', null);
+
+    expect($first->json('releases.0.version'))->toBe('1.0.20');
+});
+
+it('caps an oversized page size', function (): void {
+    changelogFixture('## [1.0.0] - 2025-01-01');
+
+    actingAsUser();
+
+    $this->getJson('/shiplog/feed?per_page=9999')
+        ->assertSuccessful()
+        ->assertJsonPath('next', null);
+});

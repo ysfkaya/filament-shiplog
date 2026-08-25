@@ -37,6 +37,17 @@ return [
     | Database Driver
     |--------------------------------------------------------------------------
     */
+    /*
+    |--------------------------------------------------------------------------
+    | Page Size
+    |--------------------------------------------------------------------------
+    |
+    | How many releases the timeline requests at a time. The rest load as the
+    | reader scrolls.
+    |
+    */
+    'per_page' => 15,
+
     'model' => Release::class,
 
     'table' => 'shiplog_releases',

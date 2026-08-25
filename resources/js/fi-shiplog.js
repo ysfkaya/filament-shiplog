@@ -26,6 +26,9 @@ class ShipLogElement extends HTMLElement {
     #open = false
     #state = 'idle'
     #releases = []
+    #cursor = 0
+    #sentinel = null
+    #pager = null
     #returnFocus = null
     #themeObserver = null
     #media = null
@@ -50,6 +53,7 @@ class ShipLogElement extends HTMLElement {
     }
 
     disconnectedCallback() {
+        this.#pager?.disconnect()
         this.#themeObserver?.disconnect()
         this.#media?.removeEventListener('change', this.#syncTheme)
         document.removeEventListener('keydown', this.#onKeydown)
@@ -119,6 +123,8 @@ class ShipLogElement extends HTMLElement {
      */
     refresh() {
         this.#state = 'idle'
+        this.#cursor = 0
+        this.#releases = []
 
         return this.#load()
     }
@@ -193,8 +199,28 @@ class ShipLogElement extends HTMLElement {
         this.#state = 'loading'
         this.#paint(`<div class="sl-state"><span class="sl-spinner"></span></div>`)
 
+        const page = await this.#fetchPage(0)
+
+        if (! page) {
+            this.#state = 'idle'
+            this.#paint(`<div class="sl-state">${escape(this.getAttribute('error-text') || 'The changelog could not be loaded.')}</div>`)
+
+            return
+        }
+
+        this.#state = 'loaded'
+        this.#releases = page.releases
+        this.#cursor = page.next
+        this.#paintTimeline()
+    }
+
+    async #fetchPage(cursor) {
+        const url = new URL(this.src, window.location.href)
+
+        url.searchParams.set('cursor', cursor)
+
         try {
-            const response = await fetch(this.src, {
+            const response = await fetch(url, {
                 headers: { Accept: 'application/json' },
                 credentials: 'same-origin',
             })
@@ -205,13 +231,68 @@ class ShipLogElement extends HTMLElement {
 
             const payload = await response.json()
 
-            this.#releases = Array.isArray(payload.releases) ? payload.releases : []
-            this.#state = 'loaded'
-            this.#paintTimeline()
+            return {
+                releases: Array.isArray(payload.releases) ? payload.releases : [],
+                next: payload.next ?? null,
+            }
         } catch (error) {
-            this.#state = 'idle'
-            this.#paint(`<div class="sl-state">${escape(this.getAttribute('error-text') || 'The changelog could not be loaded.')}</div>`)
+            return null
         }
+    }
+
+    /**
+     * Appends the next page as the reader approaches the end, so a changelog
+     * with hundreds of releases costs the same to open as one with ten.
+     */
+    async #loadMore() {
+        if (this.#cursor === null || this.#state === 'paging') {
+            return
+        }
+
+        this.#state = 'paging'
+
+        const page = await this.#fetchPage(this.#cursor)
+
+        this.#state = 'loaded'
+
+        if (! page) {
+            return
+        }
+
+        const offset = this.#releases.length
+
+        this.#releases.push(...page.releases)
+        this.#cursor = page.next
+
+        this.#shadow.querySelector('.sl-timeline')?.insertAdjacentHTML(
+            'beforeend',
+            page.releases.map((release, index) => this.#release(release, offset + index)).join(''),
+        )
+
+        this.#watchSentinel()
+    }
+
+    #watchSentinel() {
+        this.#pager?.disconnect()
+
+        if (this.#cursor === null) {
+            this.#shadow.querySelector('.sl-sentinel')?.remove()
+
+            return
+        }
+
+        this.#sentinel = this.#shadow.querySelector('.sl-sentinel')
+
+        if (! this.#sentinel) {
+            return
+        }
+
+        this.#pager = new IntersectionObserver(
+            (entries) => entries.some((entry) => entry.isIntersecting) && this.#loadMore(),
+            { root: this.#scroll, rootMargin: '600px' },
+        )
+
+        this.#pager.observe(this.#sentinel)
     }
 
     #paint(html) {
@@ -225,7 +306,12 @@ class ShipLogElement extends HTMLElement {
             return
         }
 
-        this.#paint(`<ol class="sl-timeline">${this.#releases.map(this.#release).join('')}</ol>`)
+        this.#paint(
+            `<ol class="sl-timeline">${this.#releases.map(this.#release).join('')}</ol>`
+            + '<div class="sl-sentinel" aria-hidden="true"><span class="sl-spinner"></span></div>',
+        )
+
+        this.#watchSentinel()
     }
 
     /**

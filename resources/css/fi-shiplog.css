@@ -330,6 +330,8 @@
 .sl-release {
     position: relative;
     padding-bottom: 2.25rem;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 22rem;
     opacity: 0;
     transform: translateY(1.25rem);
     animation: sl-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -643,6 +645,12 @@
 }
 
 /* ------------------------------------------------------- states & motion */
+
+.sl-sentinel {
+    display: grid;
+    place-items: center;
+    padding: 1.5rem 0 0.5rem;
+}
 
 .sl-state {
     display: grid;
