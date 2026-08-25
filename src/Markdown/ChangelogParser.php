@@ -153,7 +153,7 @@ class ChangelogParser
      *
      * @return array<int, ChangeGroup>
      */
-    protected function changes(string $body): array
+    public function changes(string $body): array
     {
         $groups = [];
         $type = null;

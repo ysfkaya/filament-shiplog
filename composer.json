@@ -1,6 +1,6 @@
 {
     "name": "ysfkaya/filament-shiplog",
-    "description": "Ship Log — a beautiful, animated changelog & release notes timeline for Laravel Filament v5",
+    "description": "Ship Log \u2014 a beautiful, animated changelog & release notes timeline for Laravel Filament v5",
     "keywords": [
         "laravel",
         "filament",
@@ -40,7 +40,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ysfkaya\\ShipLog\\": "src/"
+            "Ysfkaya\\ShipLog\\": "src/",
+            "Ysfkaya\\ShipLog\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
