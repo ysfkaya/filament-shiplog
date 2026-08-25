@@ -3,6 +3,7 @@
 namespace Ysfkaya\ShipLog\Filament\Resources\Releases;
 
 use BackedEnum;
+use Filament\Panel;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -14,6 +15,7 @@ use Ysfkaya\ShipLog\Filament\Resources\Releases\Pages\EditRelease;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Pages\ListReleases;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Schemas\ReleaseForm;
 use Ysfkaya\ShipLog\Filament\Resources\Releases\Tables\ReleasesTable;
+use Ysfkaya\ShipLog\Models\Release;
 use Ysfkaya\ShipLog\ShipLogPlugin;
 use Ysfkaya\ShipLog\Support\Authorizer;
 
@@ -23,10 +25,10 @@ class ReleaseResource extends Resource
 
     public static function getModel(): string
     {
-        return config('shiplog.model', \Ysfkaya\ShipLog\Models\Release::class);
+        return config('shiplog.model', Release::class);
     }
 
-    public static function getSlug(?\Filament\Panel $panel = null): string
+    public static function getSlug(?Panel $panel = null): string
     {
         return 'shiplog-releases';
     }

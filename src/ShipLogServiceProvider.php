@@ -35,6 +35,7 @@ class ShipLogServiceProvider extends PackageServiceProvider
         ));
 
         $this->app->singleton(ChangelogParser::class);
+        $this->app->singleton(ShipLogPlugin::class);
         $this->app->singleton(ShipLogManager::class);
         $this->app->singleton(Authorizer::class);
         $this->app->singleton(FabSettings::class);
@@ -89,7 +90,9 @@ class ShipLogServiceProvider extends PackageServiceProvider
             return;
         }
 
-        $flush = fn (): mixed => $this->app->make(ShipLogManager::class)->flush();
+        $flush = function (): void {
+            $this->app->make(ShipLogManager::class)->flush();
+        };
 
         $model::saved($flush);
         $model::deleted($flush);

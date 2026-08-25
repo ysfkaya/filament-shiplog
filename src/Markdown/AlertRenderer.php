@@ -2,6 +2,7 @@
 
 namespace Ysfkaya\ShipLog\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 use League\CommonMark\Node\Block\Paragraph;
 use League\CommonMark\Node\Inline\Newline;
@@ -47,7 +48,9 @@ final class AlertRenderer implements NodeRendererInterface
 
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
     {
-        BlockQuote::assertInstanceOf($node);
+        if (! $node instanceof BlockQuote) {
+            throw new InvalidArgumentException('Expected a block quote node.');
+        }
 
         $type = $this->pullType($node);
         $inner = $childRenderer->renderNodes($node->children());

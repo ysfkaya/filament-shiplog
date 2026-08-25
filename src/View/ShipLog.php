@@ -2,9 +2,7 @@
 
 namespace Ysfkaya\ShipLog\View;
 
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Ysfkaya\ShipLog\Enums\FabPosition;
 use Ysfkaya\ShipLog\Support\Authorizer;
 use Ysfkaya\ShipLog\Support\FabSettings;
 
@@ -43,10 +41,8 @@ class ShipLog extends Component
             ?? __('shiplog::shiplog.timeline.label');
     }
 
-    public function render(): View
+    public function render(): string
     {
-        return view('shiplog::fab', [
-            'positions' => FabPosition::class,
-        ]);
+        return 'shiplog::fab';
     }
 }

@@ -4,6 +4,7 @@ namespace Ysfkaya\ShipLog\Http;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -26,7 +27,7 @@ class InjectShipLog
             return $response;
         }
 
-        $markup = view('shiplog::fab')->render();
+        $markup = Blade::render('<x-shiplog />');
 
         $response->setContent(substr_replace(
             $content,

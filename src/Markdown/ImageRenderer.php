@@ -2,6 +2,7 @@
 
 namespace Ysfkaya\ShipLog\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -16,7 +17,9 @@ final class ImageRenderer implements NodeRendererInterface
 {
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        Image::assertInstanceOf($node);
+        if (! $node instanceof Image) {
+            throw new InvalidArgumentException('Expected an image node.');
+        }
 
         $attributes = [
             'class' => 'sl-img',

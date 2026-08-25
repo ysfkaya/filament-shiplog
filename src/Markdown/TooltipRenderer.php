@@ -2,6 +2,7 @@
 
 namespace Ysfkaya\ShipLog\Markdown;
 
+use InvalidArgumentException;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -12,7 +13,9 @@ final class TooltipRenderer implements NodeRendererInterface
 {
     public function render(Node $node, ChildNodeRendererInterface $childRenderer): HtmlElement
     {
-        Tooltip::assertInstanceOf($node);
+        if (! $node instanceof Tooltip) {
+            throw new InvalidArgumentException('Expected a tooltip node.');
+        }
 
         return new HtmlElement('span', [
             'class' => 'sl-tip',

@@ -2,6 +2,7 @@
 
 namespace Ysfkaya\ShipLog\Models;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Ysfkaya\ShipLog\Enums\ReleaseStatus;
  * @property string $version
  * @property ?string $title
  * @property ?string $body
- * @property ?\Carbon\CarbonImmutable $released_at
+ * @property ?CarbonImmutable $released_at
  * @property ReleaseStatus $status
  * @property ?array<int, string> $environments
  * @property bool $yanked
@@ -51,9 +52,10 @@ class Release extends Model
     {
         $query
             ->where('status', ReleaseStatus::Published)
-            ->where(fn (Builder $query) => $query
-                ->whereNull('released_at')
-                ->orWhereDate('released_at', '<=', now())
+            ->where(
+                fn (Builder $query) => $query
+                    ->whereNull('released_at')
+                    ->orWhereDate('released_at', '<=', now())
             );
     }
 

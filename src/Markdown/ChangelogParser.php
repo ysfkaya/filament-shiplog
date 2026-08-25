@@ -178,10 +178,10 @@ class ChangelogParser
             }
         }
 
-        return array_values(array_map(
+        return array_map(
             fn (string $value, array $items): ChangeGroup => new ChangeGroup(ChangeType::from($value), $items),
             array_keys($groups),
             $groups,
-        ));
+        );
     }
 }
