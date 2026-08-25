@@ -11,6 +11,7 @@ class ShipLogPlugin implements Plugin
     public const ID = 'fi-shiplog';
 
     use Concerns\Authorization;
+    use Concerns\HasDriver;
     use Concerns\HasFab;
     use Concerns\HasPage;
 

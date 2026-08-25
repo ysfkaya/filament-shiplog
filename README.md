@@ -458,6 +458,34 @@ itself whenever a database release is saved.
 
 ## Plugin API
 
+Almost everything is configurable from the plugin, so publishing the config file
+is optional. Anything you do not set falls back to `config/shiplog.php`.
+
+```php
+ShipLogPlugin::make()
+    ->usingMarkdown(base_path('CHANGELOG.md'))    // or ->usingDatabase()
+    ->cache(true, ttl: 3600, store: 'redis')
+    ->perPage(20)
+    ->fab(FabPosition::BottomLeft)
+    ->authorizeView(fn (?User $user): bool => $user !== null);
+```
+
+| Method | Replaces |
+| ------ | -------- |
+| `->driver('database')` | `shiplog.driver` |
+| `->usingMarkdown($path)` | `shiplog.driver` + `shiplog.markdown.path` |
+| `->usingDatabase($model)` | `shiplog.driver` + `shiplog.model` |
+| `->allowRawHtml()` | `shiplog.markdown.allow_html` |
+| `->cache($on, $ttl, $store)` | `shiplog.cache.*` |
+| `->perPage(20)` | `shiplog.per_page` |
+| `->fab(...)`, `->fabLabel()`, `->fabEnvironments()` | `shiplog.fab.*` |
+| `->authorizeView()`, `->authorizeManage()` | `shiplog.gates.*` |
+
+The route prefix and middleware stay in config, because routes are registered
+before any panel boots.
+
+### Everything at once
+
 ```php
 use Filament\Support\Icons\Heroicon;
 use Ysfkaya\ShipLog\Enums\FabPosition;
