@@ -360,5 +360,3 @@ window.ShipLog = {
     toggle: () => window.ShipLog.element()?.toggle(),
     refresh: () => window.ShipLog.element()?.refresh(),
 }
-
-export default ShipLogElement
