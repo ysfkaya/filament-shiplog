@@ -1,8 +1,11 @@
-name: "Update Changelog"
+name: update-changelog
 
 on:
   release:
     types: [released]
+
+permissions:
+  contents: write
 
 jobs:
   update:
@@ -25,6 +28,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
-          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           commit_message: Update CHANGELOG
           file_pattern: CHANGELOG.md
