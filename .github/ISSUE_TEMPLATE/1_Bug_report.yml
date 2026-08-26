@@ -1,0 +1,106 @@
+name: Bug report
+description: Report a bug in Ship Log
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a report. A reproduction saves a lot of back and forth.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How can we reproduce it?
+      description: Steps, your plugin configuration, and the relevant part of your changelog if it is a parsing issue.
+      placeholder: |
+        1. Register the plugin with `ShipLogPlugin::make()->usingMarkdown(...)`
+        2. Visit /admin/changelog
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: driver
+    attributes:
+      label: Which driver?
+      options:
+        - markdown
+        - database
+        - a custom driver
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where does it happen?
+      options:
+        - The floating button / timeline on the frontend
+        - The Changelog page in the panel
+        - The Releases resource
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Ship Log version
+      placeholder: 1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: filament-version
+    attributes:
+      label: Filament version
+      placeholder: v5.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: laravel-version
+    attributes:
+      label: Laravel version
+      placeholder: v12.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      placeholder: 8.3.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: frontend
+    attributes:
+      label: Frontend stack
+      description: Blade, Inertia + React, Vue, Svelte, something else. Only relevant for timeline issues.
+
+  - type: textarea
+    id: errors
+    attributes:
+      label: Errors
+      description: Any PHP exception or browser console error, as text rather than a screenshot.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: I ran `php artisan filament:assets` after installing or upgrading.
+          required: true
+        - label: I confirmed the account I tested with passes the `shiplog.view` gate.
+          required: true
