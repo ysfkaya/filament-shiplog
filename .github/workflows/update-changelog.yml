@@ -1,10 +1,6 @@
 name: "Update Changelog"
 
 on:
-  workflow_call:
-    secrets:
-      PAT:
-        required: true
   release:
     types: [released]
 
@@ -14,10 +10,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
@@ -26,9 +22,9 @@ jobs:
           release-notes: ${{ github.event.release.body }}
 
       - name: Commit updated CHANGELOG
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           commit_message: Update CHANGELOG
           file_pattern: CHANGELOG.md
