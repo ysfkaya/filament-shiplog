@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0}
+  .canvas{width:1280px;height:720px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .grid-bg{background-image:linear-gradient(to right,rgba(15,23,42,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(15,23,42,.05) 1px,transparent 1px);background-size:40px 40px}
+</style></head>
+<body>
+<div class="canvas relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100">
+  <div class="absolute inset-0 grid-bg"></div>
+  <div class="absolute -top-40 -right-24 w-[620px] h-[620px] rounded-full bg-amber-400/25 blur-[110px]"></div>
+
+  <div class="relative h-full flex items-center gap-12 px-16">
+    <div class="w-[470px] shrink-0">
+      <div class="flex items-center gap-4 mb-7">
+        <div class="w-[68px] h-[68px] rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 grid place-items-center shadow-lg shadow-amber-500/35">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" class="w-9 h-9">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="mono text-[34px] font-semibold tracking-tight text-slate-900 leading-none">filament-</div>
+          <div class="mono text-[34px] font-semibold tracking-tight text-amber-600 leading-tight">shiplog</div>
+        </div>
+      </div>
+      <p class="text-[26px] leading-snug font-semibold text-slate-800 mb-4">Changelog &amp; release notes,<br>as a timeline</p>
+      <p class="text-[19px] leading-relaxed text-slate-500 mb-7">Markdown or database. Drops into Blade, React, Vue and Svelte.</p>
+      <div class="inline-flex items-center gap-2.5 rounded-full border border-amber-200 bg-amber-50 px-4 py-2">
+        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+        <span class="text-[16px] font-semibold text-amber-700 tracking-wide">FILAMENT V5</span>
+      </div>
+    </div>
+
+    <div class="flex-1">
+      <div class="rounded-2xl bg-white ring-1 ring-slate-900/10 shadow-2xl shadow-slate-900/25 p-9">
+        <div class="relative pl-10">
+          <div class="absolute left-[6px] top-2 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-amber-500 to-amber-400/20"></div>
+          <span class="absolute left-0 top-1.5 w-[14px] h-[14px] rounded-full bg-white border-[3px] border-amber-500 ring-4 ring-amber-500/15"></span>
+          <div class="flex items-center gap-3.5 mb-3">
+            <span class="mono text-[18px] font-semibold px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-700">v1.2.0</span>
+            <span class="text-[16px] text-slate-400">Aug 20, 2026</span>
+          </div>
+          <h3 class="text-[26px] font-semibold tracking-tight text-slate-900 mb-3">Realtime collaboration</h3>
+          <div class="flex gap-2 mb-5">
+            <span class="text-[14px] font-semibold px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">Added 3</span>
+            <span class="text-[14px] font-semibold px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700">Fixed 1</span>
+            <span class="text-[14px] font-semibold px-2.5 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700">Security 1</span>
+          </div>
+          <div class="flex gap-3 p-3.5 mb-5 rounded-xl bg-amber-50/80 border border-amber-200 border-l-[3px] border-l-amber-500">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.7" class="w-5 h-5 shrink-0 mt-0.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+            <p class="text-[16px] leading-relaxed text-slate-700">Reindexing runs automatically on deploy.</p>
+          </div>
+          <ul class="space-y-2">
+            <li class="flex gap-3 text-[17px] text-slate-600 leading-relaxed"><span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Live cursors and <span class="border-b border-dashed border-amber-400 text-slate-800">presence</span></li>
+            <li class="flex gap-3 text-[17px] text-slate-600 leading-relaxed"><span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Inline comments with replies</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

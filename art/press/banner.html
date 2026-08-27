@@ -1,0 +1,116 @@
+<!doctype html><html class="light"><head><meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  body{margin:0}
+  .canvas{width:2560px;height:1440px;font-family:Inter,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .grid-bg{background-image:linear-gradient(to right,rgba(15,23,42,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(15,23,42,.045) 1px,transparent 1px);background-size:64px 64px}
+</style></head>
+<body>
+<div class="canvas relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100">
+  <div class="absolute inset-0 grid-bg"></div>
+  <div class="absolute -top-72 -right-56 w-[1100px] h-[1100px] rounded-full bg-amber-400/20 blur-[160px]"></div>
+  <div class="absolute -bottom-96 -left-64 w-[1000px] h-[1000px] rounded-full bg-orange-300/20 blur-[170px]"></div>
+
+  <div class="relative h-full flex items-center gap-24 px-32">
+
+    <!-- left: identity -->
+    <div class="w-[880px] shrink-0">
+      <div class="inline-flex items-center gap-3 rounded-full border border-amber-200 bg-amber-50 px-5 py-2.5 mb-12">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+        <span class="text-[19px] font-semibold text-amber-700 tracking-wide">FILAMENT V5 PLUGIN</span>
+      </div>
+
+      <div class="flex items-center gap-7 mb-9 whitespace-nowrap">
+        <div class="w-[104px] h-[104px] shrink-0 rounded-3xl bg-gradient-to-br from-amber-400 to-orange-600 grid place-items-center shadow-xl shadow-amber-500/30">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" class="w-14 h-14">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/>
+          </svg>
+        </div>
+        <h1 class="mono text-[62px] font-semibold tracking-tight text-slate-900 whitespace-nowrap">filament-<span class="text-amber-600">shiplog</span></h1>
+      </div>
+
+      <p class="text-[38px] leading-[1.32] font-medium text-slate-600 mb-14 max-w-[760px]">
+        Elegant Changelog &amp; Release Notes<br>Timeline for Filament
+      </p>
+
+      <div class="grid grid-cols-2 gap-x-8 gap-y-6 max-w-[740px]">
+        <div class="flex items-start gap-4">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+          <p class="text-[22px] text-slate-700 leading-snug"><span class="font-semibold text-slate-900">Markdown or database</span><br><span class="text-slate-500">swap drivers with one call</span></p>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+          <p class="text-[22px] text-slate-700 leading-snug"><span class="font-semibold text-slate-900">Framework agnostic</span><br><span class="text-slate-500">Blade, React, Vue, Svelte</span></p>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+          <p class="text-[22px] text-slate-700 leading-snug"><span class="font-semibold text-slate-900">Gate backed</span><br><span class="text-slate-500">you choose who reads it</span></p>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="mt-1.5 w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+          <p class="text-[22px] text-slate-700 leading-snug"><span class="font-semibold text-slate-900">Zero new deps</span><br><span class="text-slate-500">nothing extra to install</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- right: app screenshot, light theme -->
+    <div class="flex-1 relative">
+      <div class="rounded-2xl bg-white ring-1 ring-slate-900/10 shadow-2xl shadow-slate-900/25 overflow-hidden">
+        <div class="flex items-center gap-2.5 px-6 py-4 bg-slate-50 border-b border-slate-200">
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-300"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-300"></span>
+          <span class="w-3.5 h-3.5 rounded-full bg-slate-300"></span>
+          <div class="ml-5 px-4 py-1.5 rounded-md bg-white border border-slate-200 text-[15px] text-slate-400 mono">/admin/changelog</div>
+        </div>
+
+        <div class="p-12">
+          <h2 class="text-[34px] font-bold tracking-tight text-slate-900">Changelog</h2>
+          <p class="text-[19px] text-slate-500 mt-1.5 mb-10">Everything we shipped, newest first.</p>
+
+          <div class="relative pl-12">
+            <div class="absolute left-[7px] top-2 bottom-4 w-[3px] rounded-full bg-gradient-to-b from-amber-500 via-amber-400/60 to-transparent"></div>
+
+            <!-- entry 1 -->
+            <div class="relative pb-11">
+              <span class="absolute -left-[46px] top-1.5 w-4 h-4 rounded-full bg-white border-[3px] border-amber-500 ring-4 ring-amber-500/15"></span>
+              <div class="flex items-center gap-4 mb-3">
+                <span class="mono text-[19px] font-semibold px-3.5 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-700">v1.2.0</span>
+                <span class="text-[18px] text-slate-400">Aug 20, 2026</span>
+              </div>
+              <h3 class="text-[27px] font-semibold tracking-tight text-slate-900 mb-3.5">Realtime collaboration</h3>
+              <div class="flex gap-2.5 mb-5">
+                <span class="text-[16px] font-semibold px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">Added 3</span>
+                <span class="text-[16px] font-semibold px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700">Fixed 1</span>
+              </div>
+              <div class="flex gap-3.5 p-4 mb-5 rounded-xl bg-sky-50/70 border border-sky-200 border-l-[3px] border-l-sky-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="1.7" class="w-6 h-6 shrink-0 mt-0.5"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
+                <p class="text-[18px] leading-relaxed text-slate-700">Multiplayer editing is on for every workspace. No flag to flip.</p>
+              </div>
+              <ul class="space-y-2.5">
+                <li class="flex gap-3.5 text-[19px] text-slate-600 leading-relaxed"><span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Live cursors and <span class="border-b border-dashed border-amber-400 text-slate-800">presence</span> in the editor</li>
+                <li class="flex gap-3.5 text-[19px] text-slate-600 leading-relaxed"><span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>Inline comments with threaded replies</li>
+              </ul>
+            </div>
+
+            <!-- entry 2 -->
+            <div class="relative">
+              <span class="absolute -left-[46px] top-1.5 w-4 h-4 rounded-full bg-white border-[3px] border-amber-400 ring-4 ring-amber-400/15"></span>
+              <div class="flex items-center gap-4 mb-3">
+                <span class="mono text-[19px] font-semibold px-3.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">v1.1.0</span>
+                <span class="text-[18px] text-slate-400">Jul 2, 2026</span>
+              </div>
+              <h3 class="text-[27px] font-semibold tracking-tight text-slate-900 mb-3.5">Faster search</h3>
+              <div class="flex gap-2.5">
+                <span class="text-[16px] font-semibold px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-700">Changed 1</span>
+                <span class="text-[16px] font-semibold px-3 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700">Security 1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>
