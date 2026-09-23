@@ -17,8 +17,6 @@ button on your frontend, a full-screen overlay that opens in place, and a
 dedicated page inside your Filament panel. Notes can come from a `CHANGELOG.md`
 file or from your database, and nobody sees them unless you say so.
 
-Built for **Filament v5** and **Laravel 12**.
-
 ![The changelog page inside a Filament panel](art/panel-page.png)
 
 ---
