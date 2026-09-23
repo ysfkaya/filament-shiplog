@@ -179,12 +179,6 @@ Inertia never replaces that part of the document.
 The middleware is Inertia aware: it injects into the initial page load and skips
 `X-Inertia` visit responses, so partial reloads never receive a second copy.
 
-To import the element from your own bundle instead:
-
-```js
-import '@ysfkaya/shiplog'
-```
-
 ### React, Vue and Svelte
 
 `<ship-log>` is a standard custom element, so it works as-is:
