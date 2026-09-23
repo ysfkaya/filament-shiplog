@@ -33,6 +33,7 @@ it('renders the timeline element pointed at the feed', function (): void {
     $this->get('/admin/changelog')
         ->assertSee('<ship-log', escape: false)
         ->assertSee('mode="inline"', escape: false)
+        ->assertSee('theme="class"', escape: false)
         ->assertSee(route('shiplog.feed'), escape: false);
 });
 

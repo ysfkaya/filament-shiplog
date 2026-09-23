@@ -384,15 +384,24 @@ class ShipLogElement extends HTMLElement {
         }
     }
 
+    /**
+     * `theme="light"` or `theme="dark"` pins the look. `theme="class"` trusts
+     * the `dark` class alone, for hosts like Filament that already resolve the
+     * system preference into it, so a light page on a dark OS stays light.
+     */
     #watchTheme() {
-        if (this.hasAttribute('theme')) {
-            this.dataset.theme = this.getAttribute('theme')
+        const theme = this.getAttribute('theme')
+
+        if (theme && theme !== 'class') {
+            this.dataset.theme = theme
 
             return
         }
 
-        this.#media = window.matchMedia('(prefers-color-scheme: dark)')
-        this.#media.addEventListener('change', this.#syncTheme)
+        if (theme !== 'class') {
+            this.#media = window.matchMedia('(prefers-color-scheme: dark)')
+            this.#media.addEventListener('change', this.#syncTheme)
+        }
 
         this.#themeObserver = new MutationObserver(this.#syncTheme)
         this.#themeObserver.observe(document.documentElement, {

@@ -38,6 +38,12 @@ it('lets an attribute win over the configured position', function (): void {
     expect(Blade::render('<x-shiplog position="top-right" />'))->toContain('position="top-right"');
 });
 
+it('passes the theme through to the element', function (): void {
+    actingAsUser();
+
+    expect(Blade::render('<x-shiplog theme="dark" />'))->toContain('theme="dark"');
+});
+
 it('stays hidden in environments the button is not meant for', function (): void {
     actingAsUser();
 

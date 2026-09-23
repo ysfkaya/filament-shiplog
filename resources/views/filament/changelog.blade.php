@@ -1,6 +1,7 @@
 <x-filament-panels::page>
     <ship-log
         mode="inline"
+        theme="class"
         @if (\Illuminate\Support\Facades\Route::has('shiplog.feed'))
             src="{{ route('shiplog.feed') }}"
         @endif

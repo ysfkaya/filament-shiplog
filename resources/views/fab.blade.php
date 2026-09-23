@@ -15,4 +15,5 @@
     storage-key="{{ \Illuminate\Support\Str::slug(config('app.name', 'app')) }}"
     empty-text="{{ __('shiplog::shiplog.timeline.empty') }}"
     error-text="{{ __('shiplog::shiplog.timeline.error') }}"
+    {{ $attributes }}
 ></ship-log>

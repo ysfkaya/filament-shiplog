@@ -560,6 +560,14 @@ updates live when that changes. Force it if you would rather not:
 <x-shiplog theme="dark" />
 ```
 
+If your frontend toggles a `dark` class and resolves "system" into it itself (as
+Filament does), use `theme="class"` so the operating system preference never
+overrides a light page:
+
+```blade
+<x-shiplog theme="class" />
+```
+
 Animations respect `prefers-reduced-motion`.
 
 ---
